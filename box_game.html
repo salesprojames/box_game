@@ -65,6 +65,7 @@
 
     //Constantly loop over the code to play the game.
     function playGame(){
+      drawFinishLine();
       drawBox();
       drawBoxEnemies();
       detectCollision();
@@ -76,6 +77,14 @@
     function drawBox(){
       context.fillStyle = box.color;
       context.fillRect(box.x, box.y, box.size, box.size);
+    }
+
+    function drawFinishLine(){
+      context.fillStyle = "red";
+      context.beginPath();
+      context.moveTo(50,0);
+      context.lineTo(50,canvas.height);
+      context.stroke();
     }
 
     //Detect a collision
