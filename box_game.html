@@ -53,8 +53,6 @@
       }
     }
 
-    createEnemies();
-
     //Draw the Enemy's boxes on the screen.
     function drawBoxEnemies(){
       for (i = 0; i < enemies.length; i++){
@@ -62,16 +60,6 @@
         context.fillRect(enemies[i].x, enemies[i].y, enemies[i].size, enemies[i].size);
       }
     }
-
-    //Constantly loop over the code to play the game.
-    function playGame(){
-      drawFinishLine();
-      drawBox();
-      drawBoxEnemies();
-      detectCollision();
-      requestAnimationFrame(playGame);
-    }
-    playGame();
 
     //Draw the Player's box on the screen.
     function drawBox(){
@@ -116,7 +104,7 @@
 
       if (box.x >= canvas.width - box.size){
         box.x = canvas.width - box.size;
-      } else if (box.x <= 0){
+      } else if (box.x <= 50){
         box.x = 0;
         alert("You Win!!!!");
       }
@@ -127,6 +115,18 @@
         box.y = 0;
       }
     });
+
+    //Constantly loop over the code to play the game.
+    function playGame(){
+      drawFinishLine();
+      drawBox();
+      drawBoxEnemies();
+      detectCollision();
+      requestAnimationFrame(playGame);
+    }
+
+    playGame();
+    createEnemies();
 
   </script>
 </body>
