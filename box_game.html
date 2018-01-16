@@ -35,6 +35,7 @@
       if (number < 50){
         number = 50;
       }
+
       return number;
     }
 
@@ -64,6 +65,11 @@
     //Draw the Enemy's boxes on the screen.
     function drawBoxEnemies(){
       for (i = 0; i < enemies.length; i++){
+
+        if (enemies[i].x > (550 - enemies[i].size)){
+          enemies[i].x = (550 - enemies[i].size)
+        }
+
         context.fillStyle = enemies[i].color;
         context.fillRect(enemies[i].x, enemies[i].y, enemies[i].size, enemies[i].size);
       }
@@ -75,11 +81,15 @@
       context.fillRect(box.x, box.y, box.size, box.size);
     }
 
-    function drawFinishLine(){
-      context.fillStyle = "red";
+    function drawLines(){
       context.beginPath();
       context.moveTo(50,0);
       context.lineTo(50,canvas.height);
+      context.stroke();
+
+      context.beginPath();
+      context.moveTo(550,0);
+      context.lineTo(550,canvas.height);
       context.stroke();
     }
 
@@ -126,7 +136,7 @@
 
     //Constantly loop over the code to play the game.
     function playGame(){
-      drawFinishLine();
+      drawLines();
       drawBox();
       drawBoxEnemies();
       detectCollision();
