@@ -43,39 +43,36 @@
         y: y,
         size: size,
         color: color,
+        speed: speed,
         dir: dir
       }
     }
 
     function createEnemies(){
       for (i = 0; i < boxEnemy.amount; i++){
-        enemies.push(generateEnemyObject(randomNum(canvas.width),randomNum(canvas.height),40,"black",5,1))
+        enemies.push(generateEnemyObject(randomNum(canvas.width),randomNum(canvas.height),40,"black",1,randomNum(4)))
       }
     }
 
     function checkEnemyLocation(enemy){
-      //Check if the box is over the starting line
+    //Check if the box is over the starting line
       if (enemy.x > (550 - enemy.size)){
-          enemy.x = (550 - enemy.size);
+        enemy.dir = 1;
 
-      //Check if the box is over the finish line
-        } else if (enemy.x < 50){
-          enemy.x = 50;
-        }
+    //Check if the box is over the finish line
+      } else if (enemy.x < 50){
+        enemy.dir = 0;
+      }
 
       //Check if the box is over the bottom line
-        if (enemy.y > (canvas.height - enemy.size)){
-          enemy.y = (canvas.height - enemy.size);
-        }
-
-      //Check if the box is touching another box
-
-
-      //Check to confirm enemy location is acceptable
-      //Or rerun the function.
-      if (!confirmEnemyLocationAcceptable(enemy)){
-        checkEnemyLocation(enemy);
+      if (enemy.y > (canvas.height - enemy.size)){
+        enemy.dir = 3;
       }
+
+      if (enemy.y < 0 ){
+        enemy.dir = 2;
+      }
+
     }
 
     function confirmEnemyLocationAcceptable(enemy){
@@ -93,6 +90,16 @@
     //Draw the Enemy's boxes on the screen.
     function drawBoxEnemies(){
       for (i = 0; i < enemies.length; i++){
+
+        if(enemies[i].dir == 0){
+          enemies[i].x += enemies[i].speed;
+        } else if (enemies[i].dir == 1){
+          enemies[i].x -= enemies[i].speed;
+        } else if (enemies[i].dir == 2){
+          enemies[i].y += enemies[i].speed;
+        } else if (enemies[i].dir == 3){
+          enemies[i].y -= enemies[i].speed;
+        }
 
         checkEnemyLocation(enemies[i]);
 
@@ -134,7 +141,6 @@
 
     //Track the arrow keys to move the player's box.
     document.addEventListener("keydown", function(event){
-      context.clearRect(box.x, box.y, box.size, box.size);
 
       if (event.keyCode == 37) {
         box.x -= box.speed;
@@ -162,6 +168,7 @@
 
     //Constantly loop over the code to play the game.
     function playGame(){
+      context.clearRect(0,0,canvas.width,canvas.height);
       drawLines();
       drawBox();
       drawBoxEnemies();
