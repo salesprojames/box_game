@@ -50,7 +50,7 @@
 
     function createEnemies(){
       for (i = 0; i < boxEnemy.amount; i++){
-        enemies.push(generateEnemyObject(randomNum(canvas.width),randomNum(canvas.height),40,"black",1,randomNum(4)))
+        enemies.push(generateEnemyObject(randomNum(canvas.width),randomNum(canvas.height),40,"black",5,randomNum(4)))
       }
     }
 
@@ -134,9 +134,14 @@
            (box.y + box.size) >= enemies[i].y &&
            (box.x + box.size) >= enemies[i].x
         ){
-          console.log("You collided");
+          gameOver();
         }
       }
+    }
+
+    function gameOver(){
+      alert("You Lost!");
+      location.reload();
     }
 
     //Track the arrow keys to move the player's box.
