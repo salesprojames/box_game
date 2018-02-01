@@ -37,20 +37,21 @@
       amount: 7
     }
 
-    function generateEnemyObject(x,y,size,color,speed,dir){
+    function generateEnemyObject(x,y,size,color,speed,dir,pathDuration){
       return {
         x: x,
         y: y,
         size: size,
         color: color,
         speed: speed,
-        dir: dir
+        dir: dir,
+        pathDuration: pathDuration
       }
     }
 
     function createEnemies(){
       for (i = 0; i < boxEnemy.amount; i++){
-        enemies.push(generateEnemyObject(randomNum(canvas.width),randomNum(canvas.height),40,"black",5,randomNum(4)))
+        enemies.push(generateEnemyObject(randomNum(canvas.width-90),randomNum(canvas.height),40,"black",5,randomNum(4),randomNum(60)))
       }
     }
 
@@ -87,9 +88,19 @@
       }
     }
 
+    function changeEnemyDirection(enemy){
+      enemy.pathDuration -= 1;
+      if (enemy.pathDuration <= 0){
+        enemy.dir = randomNum(4);
+        enemy.pathDuration = randomNum(60);
+      }
+    }
+
     //Draw the Enemy's boxes on the screen.
     function drawBoxEnemies(){
       for (i = 0; i < enemies.length; i++){
+
+        changeEnemyDirection(enemies[i]);
 
         if(enemies[i].dir == 0){
           enemies[i].x += enemies[i].speed;
